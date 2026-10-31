@@ -11,5 +11,11 @@ class Post(models.Model):
     category = models.CharField(max_length=100, blank=True)
     date_posted = models.DateTimeField(default=timezone.now)
 
+    class Meta:
+        constraints = [
+            models.CheckConstraint(condition=models.Q(price__isnull=True) | models.Q(price__gt=0), name='post_positive_price'),
+            models.CheckConstraint(condition=models.Q(is_product=False) | models.Q(price__isnull=False), name='product_requires_price'),
+        ]
+
     def __str__(self):
         return f'Post by {self.author.username} on {self.date_posted}'
