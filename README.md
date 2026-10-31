@@ -1,12 +1,12 @@
 # UniHome
 
-UniHome is a Nigerian student accommodation and long-term rental platform under development. This repository currently contains the secured Django foundation, account and social Post APIs, and a separate legacy Marketplace. **Rental listings, signing, protected payments and a frontend are not implemented.** Marketplace checkout creates an **unpaid order**, never a payment confirmation.
+UniHome is a Nigerian student accommodation and long-term rental platform under development. This repository contains the secured Django foundation plus versioned rental catalog, representative/property-authority verification, media moderation and inventory-availability APIs. Account/social Post APIs and the separate legacy Marketplace remain available. **A tenant frontend, viewing/reservation workflows, agreements and protected payments are not implemented.** Marketplace checkout creates an **unpaid order**, never a payment confirmation.
 
-Based on `victor-law-create/learning`, with original history and MPL-2.0 license preserved. See [product requirements](docs/PRD.md), [architecture](docs/ARCHITECTURE.md), [threat model](docs/THREAT_MODEL.md), [roadmap](docs/ROADMAP.md) and [Phase 1 review](docs/PHASE_1_REVIEW.md).
+Based on `victor-law-create/learning`, with original history and MPL-2.0 license preserved. See [product requirements](docs/PRD.md), [architecture](docs/ARCHITECTURE.md), [threat model](docs/THREAT_MODEL.md), [roadmap](docs/ROADMAP.md) and [Phase 1 review](docs/PHASE_1_REVIEW.md), [Phase 2 review](docs/PHASE_2_REVIEW.md) and [rental API contract](docs/RENTAL_API.md).
 
 ## Development
 
-Use Python 3.12. Each cloud task already has an isolated workspace; use the existing checkout without creating a worktree unless requested.
+Use Python 3.12. Install supported OS packages for `ffmpeg`/`ffprobe` before video uploads/tests (on Debian/Ubuntu: `apt-get install ffmpeg`). Each cloud task already has an isolated workspace; use the existing checkout without creating a worktree unless requested.
 
 ```bash
 python -m venv .venv
@@ -17,6 +17,7 @@ export DJANGO_SECRET_KEY="$(python -c 'import secrets; print(secrets.token_urlsa
 export DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1
 cd backend
 python manage.py migrate
+python manage.py bootstrap_rental_roles
 python manage.py check
 python manage.py test
 python manage.py runserver 127.0.0.1:8000
@@ -51,6 +52,6 @@ Rollback new code only with the matching project entry points and schema plan. D
 
 ## Security and release boundaries
 
-Images are limited to 5 MiB and JPEG/PNG/WebP. No production upload serving, malware pipeline, private verification storage or real identity-document collection is configured. Enforce request-body limits at the ingress as well as application validation. No provider keys, card data, customer funds or real agreements belong in development.
+Images are limited to 5 MiB and JPEG/PNG/WebP. Private verification/catalog storage and authorized API delivery are implemented for a closed pilot. Production object storage, malware scanning, isolated media workers and privacy/retention controls still require configuration and approval; do not collect real identity documents yet. Enforce request-body limits at the ingress as well as application validation. No provider keys, card data, customer funds or real agreements belong in development.
 
-The platform still requires rental domains, property authority verification, private media controls, staff audit trails, privacy/retention policy, legal templates, a suitable contracted funds-holding provider, reconciliation/dispute operations and deployment/backup recovery review. No live funds, e-signature invitations or deployment are authorized or enabled by this phase.
+The platform still requires the tenant frontend, viewing/reservation/agreement workflows, production storage/audit safeguards, privacy/retention policy, legal templates, a suitable contracted funds-holding provider, reconciliation/dispute operations and deployment/backup recovery review. No live funds, e-signature invitations or deployment are authorized or enabled by this phase.

@@ -19,3 +19,5 @@ Trust boundaries: untrusted browsers/uploads, Django API, database, private/publ
 Development credentials in CI/container commands are test-only. Never deploy supplied example keys. The inherited public fallback secret was removed; any prior deployment using it requires secret rotation and session/token invalidation. No such deployment was observed.
 
 These controls do not establish legal compliance, escrow authority or production readiness. See PRD external launch gates.
+
+Phase 2 adds current identity + property-authority gating, separate reviewer permissions/no self-review, immutable submitted listing revisions, material-change withdrawal and safe suspension, private authorized evidence/media delivery, image/video normalization and audit. PostgreSQL races cover availability blocks, content revisions and revocation versus approval. No actual tenant reservation or provider state machine is implemented. Production scanning/isolated workers/storage/retention and protected audit export remain required; see PHASE_2_REVIEW.md.

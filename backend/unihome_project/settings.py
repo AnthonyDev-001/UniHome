@@ -57,6 +57,9 @@ INSTALLED_APPS = [
     "rest_framework",
     "feed",
     "marketplace",
+    "audit",
+    "properties",
+    "verification",
 ]
 
 MIDDLEWARE = [
@@ -192,3 +195,12 @@ EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
 EMAIL_TIMEOUT = 10
 DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'noreply@localhost')
+
+# No web server route may serve this directory. All access is authorized per file.
+PRIVATE_UPLOAD_ROOT = Path(os.environ.get('PRIVATE_UPLOAD_ROOT', BASE_DIR.parent / 'private_uploads'))
+FFPROBE_BINARY = os.environ.get('FFPROBE_BINARY', 'ffprobe')
+FFMPEG_BINARY = os.environ.get('FFMPEG_BINARY', 'ffmpeg')
+for public_root in (Path(MEDIA_ROOT).resolve(), Path(STATIC_ROOT).resolve()):
+    private_root = PRIVATE_UPLOAD_ROOT.resolve()
+    if private_root == public_root or private_root in public_root.parents or public_root in private_root.parents:
+        raise ImproperlyConfigured('Private uploads must be separate from public media/static roots.')

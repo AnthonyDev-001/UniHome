@@ -13,3 +13,5 @@ Frontend proposal: mobile-first Next.js/React/TypeScript, list-first discovery, 
 Public approved media derivatives and private identity/contracts use separate storage/access policies. Queue/outbox workers are added when asynchronous workflows begin. Signing, financial and notification vendors sit behind adapters; mock/pilot behavior must be clearly distinguished from commercial behavior. No microservices or in-house custodial wallet is proposed.
 
 See [Phase 0 audit](PHASE_0_AUDIT.md) for the complete proposed model, endpoint inventory, threat assessment and PR plan. Phase 1 implementation details and limitations are recorded in [review notes](PHASE_1_REVIEW.md).
+
+Phase 2 implements the catalog/verification/media/moderation subset plus audit and informational availability blocks. See [rental API](RENTAL_API.md) and [review](PHASE_2_REVIEW.md). Inventory currently has one independently rentable granularity per property; hierarchical rental reservations remain Phase 4.
